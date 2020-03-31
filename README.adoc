@@ -4,6 +4,8 @@ Using Consul, Traefik and Camel Spring Boot
 
 == Spring Boot Camel Rest Service
 
+Built upon https://github.com/apache/camel-spring-boot/tree/master/examples/camel-example-spring-boot-rest-openapi[camel-example-spring-boot-rest-openapi].
+
 To build
 
    mvn clean install
