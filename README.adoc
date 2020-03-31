@@ -2,7 +2,18 @@
 
 Using Consul, Traefik and Camel Spring Boot
 
+== Spring Boot Camel Rest Service
+
+To build
+
+   mvn clean install
+   docker build -t escalon/camel-microservice-rest:latest .
+
+
 == Traefik-Gateway
+
+Traefik customized with traefik.toml.
+
 
 To list Traefik commands
 
@@ -17,6 +28,20 @@ To build
 Registers docker containers with Consul using service tags that are evaluated by Traefik.
 
 When started with `-internal` option, it is sufficient when a container's description exposes its internal ports to other services to make it accessible to Traefik.
+[source,yaml]
+----
+    expose:
+      - "8080"
+----
+
+An alternative is to publish the ports on a random port on the docker host by specifying only the container-internal port:
+
+[source,yaml]
+----
+    ports:
+      - "8080"
+----
+
 
 == Microservices
 
