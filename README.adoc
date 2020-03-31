@@ -29,14 +29,19 @@ To build
 
 Registers docker containers with Consul using service tags that are evaluated by Traefik.
 
-When started with `-internal` option, it is sufficient when a container's description exposes its internal ports to other services to make it accessible to Traefik.
+Add an environment variable SERVICE_TAGS to a container to add tags in Consul. Tags can be used to control how a service is used, e.g. how it should be published by Traefik or scraped by Prometheus.
+
+When started with `-internal` option, it is sufficient when a container's description *exposes* its internal ports to other services to make it accessible to Traefik.
+
+Expose internal ports to other containers in docker-compose:
+
 [source,yaml]
 ----
     expose:
       - "8080"
 ----
 
-An alternative is to publish the ports on a random port on the docker host by specifying only the container-internal port:
+An alternative is to *publish* the ports on a random port on the docker host by specifying only the container-internal port in docker-compose.yml:
 
 [source,yaml]
 ----
@@ -44,27 +49,50 @@ An alternative is to publish the ports on a random port on the docker host by sp
       - "8080"
 ----
 
+== Prometheus-Metrics
+
+Prometheus customized with prometheus.yml.
+
+To build
+
+    docker build -t prometheus-metrics .
+
+To view Prometheus metrics about itself, enter the following expression in the Prometheus UI and hit execute:
+
+    prometheus_target_interval_length_seconds
+
+Count number of returned time series:
+
+    count(prometheus_target_interval_length_seconds)
+
+Http Requests:
+
+    http_server_requests_seconds_count
+
 
 == Microservices
 
-To run the microservices
+To run the microservices setup:
 
     docker-compose up                  # stop with ctrl+c
     docker-compose up --remove-orphans # remove unused containers
     docker-compose up -d               # run detached or update running stack
-    docker-compose up --scale rest=2   # scale service
+    docker-compose up -d --scale rest=2   # scale service
     docker-compose logs -f             # follow logs
 
 |===
-|URL |Service
+|Service |URL
 
-|http://localhost:8500
 |Consul
+|http://localhost:8500
 
-|http://localhost:8080
 |Traefik
+|http://localhost:8080
 
-|http://localhost/rest/users
 |Camel Rest
+|http://localhost/rest/users
+
+|Prometheus
+|http://localhost:9090/graph
 
 |===

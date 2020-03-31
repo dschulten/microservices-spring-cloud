@@ -40,12 +40,20 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock
     links:
       - consul
+
+  metrics:
+    image: prometheus-metrics
+    depends_on:
+      - consul
+    ports:
+      - 9090:9090
+
   rest:
     image: escalon/camel-microservice-rest:latest
     expose:
       - "8080"
     environment:
-      - SERVICE_TAGS=traefik.enable=true,traefik.frontend.entryPoints=http,traefik.frontend.rule=Host:localhost
+      - SERVICE_TAGS=traefik.enable=true,traefik.frontend.entryPoints=http,traefik.frontend.rule=Host:localhost,metrics
 #  rest1:
 #    image: escalon/camel-microservice-rest:latest
 #    ports:

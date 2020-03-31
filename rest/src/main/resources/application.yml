@@ -21,7 +21,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: info,health,camelroutes
+        include: info,health,camelroutes,metrics,prometheus
   info:
     camel:
       enabled: true
