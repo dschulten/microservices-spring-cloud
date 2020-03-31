@@ -1,0 +1,43 @@
+= Microservice Example
+
+Using Consul, Traefik and Camel Spring Boot
+
+== Traefik-Gateway
+
+To list Traefik commands
+
+    docker run traefik:v1.7 --help
+
+To build
+
+    docker build -t traefik-gateway .
+
+== Registrator
+
+Registers docker containers with Consul using service tags that are evaluated by Traefik.
+
+When started with `-internal` option, it is sufficient when a container's description exposes its internal ports to other services to make it accessible to Traefik.
+
+== Microservices
+
+To run the microservices
+
+    docker-compose up                  # stop with ctrl+c
+    docker-compose up --remove-orphans # remove unused containers
+    docker-compose up -d               # run detached or update running stack
+    docker-compose up --scale rest=2   # scale service
+    docker-compose logs -f             # follow logs
+
+|===
+|URL |Service
+
+|http://localhost:8500
+|Consul
+
+|http://localhost:8080
+|Traefik
+
+|http://localhost/rest/users
+|Camel Rest
+
+|===

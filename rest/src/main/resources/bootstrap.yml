@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: rest
+  cloud:
+    consul:
+      discovery:
+        instanceId: ${spring.application.name}:${random.value}

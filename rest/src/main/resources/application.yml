@@ -1,0 +1,35 @@
+spring:
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+camel:
+  component:
+    servlet:
+      mapping:
+        context-path: /rest/*
+  springboot:
+    name: MyCamel
+greeting: Hello World
+management:
+  endpoint:
+    camelroutes:
+      enabled: true
+      read-only: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: info,health,camelroutes
+  info:
+    camel:
+      enabled: true
+      verbose: true
+timer:
+  period: 2000
+logging.level:
+  org.springframework: INFO
+  org.apache.camel.spring.boot: INFO
+  org.apache.camel.impl: DEBUG
+  de.escalon.microservice.camel: DEBUG
