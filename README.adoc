@@ -11,6 +11,17 @@ To build
    mvn clean install
    docker build -t escalon/camel-microservice-rest:latest .
 
+Also see:
+
+* https://camel.apache.org/camel-spring-boot/latest/index.html
+* https://camel.apache.org/components/latest/test-spring-junit5.html
+* https://camel.apache.org/components/latest/test-junit5.html
+* https://camel.apache.org/components/latest/mock-component.html
+* (JUnit4: https://camel.apache.org/manual/latest/spring-testing.html)
+* https://camel.apache.org/manual/latest/camel-3-migration-guide.html
+* https://camel.apache.org/blog/CustomWebApiComponent/ (Wiremock)
+* https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/test/context/SpringBootTest.html
+* https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-testing
 
 == Traefik-Gateway
 
@@ -67,7 +78,7 @@ Count number of returned time series:
 
 Http Requests:
 
-    http_server_requests_seconds_count
+    http_server_requests_seconds_count-
 
 
 == Microservices

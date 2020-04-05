@@ -10,7 +10,6 @@ camel:
         context-path: /rest/*
   springboot:
     name: MyCamel
-greeting: Hello World
 management:
   endpoint:
     camelroutes:
@@ -26,10 +25,10 @@ management:
     camel:
       enabled: true
       verbose: true
-timer:
-  period: 2000
-logging.level:
-  org.springframework: INFO
-  org.apache.camel.spring.boot: INFO
-  org.apache.camel.impl: DEBUG
-  de.escalon.microservice.camel: DEBUG
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.apache.camel.spring.boot: INFO
+    org.apache.camel.impl: INFO
+    de.escalon.microservice.camel: INFO

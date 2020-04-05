@@ -2,53 +2,46 @@ package de.escalon.microservice.camel.rest;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CamelRouter extends RouteBuilder {
 
+  @Value("${server.port}")
+  private int serverPort;
+
   @Override
   public void configure() throws Exception {
-    // from("timer:hello?period={{timer.period}}")
-    //    .routeId("hello")
-    //    .routeGroup("hello-group")
-    //    .transform()
-    //    .method("myBean", "saySomething")
-    //    .filter(simple("${body} contains 'foo'"))
-    //    .to("log:foo")
-    //    .end()
-    //    .to("stream:out");
-
-    // configure we want to use spark-rest on port 8080 as the component for the rest DSL
-    // and for the swagger api-doc as well
     restConfiguration()
-        // .contextPath("/rest")
         .contextPath("/rest")
         .component("servlet")
-        // .component("undertow")
-        .apiContextPath("/api-doc")
-        .port(8080)
-        // and we enable json binding mode
+        //.component("undertow")
+        .port(serverPort)
         .bindingMode(RestBindingMode.json)
-        // and output using pretty print
-        .dataFormatProperty("prettyPrint", "true");
+        .dataFormatProperty("prettyPrint", "true")
+        .apiContextPath("/api-doc")
+        .apiProperty("api.title", "User API")
+        .apiProperty("api.version", "1.0.0");
 
-    // this user REST service is json only
     rest("/users")
         .consumes("application/json")
         .produces("application/json")
         .get("/{id}")
         .outType(User.class)
-        .to("bean:userService?method=getUser(${header.id})")
+        .to("direct:getuser")
         .get()
-        .outType(User[].class)
-        .route()
-        .log("Get users")
-        .to("bean:userService?method=listUsers")
-        .endRest()
+        .outType(User[].class).to("direct:getusers")
         .put("/update")
         .type(User.class)
         .outType(User.class)
         .to("bean:userService?method=updateUser");
+
+    from("direct:getusers").routeId("getUsersRoute")
+        .log("Get users")
+        .to("bean:userService?method=listUsers");
+
+    from("direct:getuser")
+        .to("bean:userService?method=getUser(${header.id})");
   }
 }
