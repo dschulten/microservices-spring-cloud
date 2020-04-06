@@ -42,7 +42,3 @@ services:
       - "8080"
     environment:
       - SERVICE_TAGS=traefik.enable=true,traefik.frontend.entryPoints=http,traefik.frontend.rule=Host:localhost,metrics
-#  rest1:
-#    image: escalon/camel-microservice-rest:latest
-#    ports:
-#      - "8082:8080"
