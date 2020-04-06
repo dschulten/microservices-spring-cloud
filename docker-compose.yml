@@ -8,18 +8,6 @@ services:
       - "8400:8400"
       - "8500:8500"
       - "8600:53/udp"
-#  gateway:
-#    image: escalon/gateway:latest
-#    ports:
-#      - "9090:8080"
-#  reverse-proxy:
-#    image: traefik-gateway # The official Traefik docker image
-#    command: --api --consul --consul.endpoint=consul:8500 # Enables the web UI and tells Traefik to listen to docker
-#    ports:
-#      - "80:80"     # The HTTP port
-#      - "8080:8080" # The Web UI (enabled by --api)
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events-
   reverse-proxy:
     image: traefik-gateway
     command: traefik --consulcatalog.endpoint=consul:8500
